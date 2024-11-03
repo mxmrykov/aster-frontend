@@ -1,0 +1,10 @@
+.root-parent {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    background-image: url("../../content/bg/root-bg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
