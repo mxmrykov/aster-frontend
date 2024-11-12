@@ -1,5 +1,6 @@
 import * as React from "react";
 import "../../../../css/elems/sign-up-block.css"
+import checkLogin from "../../../../../domain/https/auth/sighup/check-login";
 
 export default function SignUpFirstStep({name, setName, login, setLogin, callBackNextStep}): React.JSX.Element {
     const [highLightName, setHighLightName] = React.useState<boolean>(false)
@@ -16,7 +17,7 @@ export default function SignUpFirstStep({name, setName, login, setLogin, callBac
     }
 
     return <div className="flex flex-col items-center space-y-4 p-6 sign-up-step-elem" style={{width: 300}}>
-        <h2>
+        <h2 className="text-center">
             Привет! Давай знакомиться
         </h2>
         <input

@@ -3,6 +3,16 @@ export type AuthExtV1 = {
         IAID: string
         ASID: string
     }
+    status: number
     error: boolean
-    errorMessage: string
+    message: string
+}
+
+export type AuthSignupCheckLogin = {
+    payload: {
+        unused: boolean
+    }
+    status: number
+    error: boolean
+    message: string
 }

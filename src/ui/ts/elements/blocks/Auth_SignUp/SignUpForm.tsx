@@ -2,11 +2,12 @@ import * as React from "react";
 // @ts-ignore
 import SignUpFirstStep from "./SignUpFirstStep.tsx"
 import "../../../../css/elems/sign-up-block.css"
-import {useEffect} from "react"
 // @ts-ignore
 import SignUpPhoneStep from "./SignUpPhoneStep.tsx"
 // @ts-ignore
 import SignUpPasswordStep from "./SignUpPasswordStep.tsx";
+// @ts-ignore
+import checkLogin from "../../../../../domain/https/auth/sighup/check-login.ts";
 
 export default function SignUpForm(): React.JSX.Element {
     const passwordRef = React.useRef<HTMLInputElement | null>(null);
@@ -41,7 +42,20 @@ export default function SignUpForm(): React.JSX.Element {
                 login={login}
                 setName={setName}
                 setLogin={setLogin}
-                callBackNextStep={() => scroll(268)}
+                callBackNextStep={() => {
+                    if (extAuthPending)
+                    checkLogin(login).then(r => {
+                        if (r.status === 200) {
+                            scroll(268)
+                            return
+                        }
+
+                        switch (r.message) {
+                            case "Login is already in use":
+
+                        }
+                    })
+                }}
             />
             <SignUpPhoneStep
                 name={name}

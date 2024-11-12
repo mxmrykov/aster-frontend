@@ -1,13 +1,11 @@
 // @ts-ignore
-import {AuthExtV1} from "../../../const/model/req.ts";
-// @ts-ignore
-import {instanceAuthApi, API_GROUPS} from "../../../const/https/req.ts";
+import {AuthSignupCheckLogin} from "../../../const/model/req.ts";
+import {API_GROUPS, instanceAuthApi} from "../../../const/https/req";
 import axios from "axios";
 
-export default async function ExtAuthV1(login: string):
-    Promise<AuthExtV1> {
-    return await instanceAuthApi.post<AuthExtV1>(
-        instanceAuthApi.defaults.baseURL + API_GROUPS["AUTH_API_V1_EXT"],
+export default async function checkLogin(login: string): Promise<AuthSignupCheckLogin> {
+    return await instanceAuthApi.post<AuthSignupCheckLogin>(
+        instanceAuthApi.defaults.baseURL + API_GROUPS["AUTH_API_V1_CHECK_LOGIN"],
         {
             login: login
         }, {
@@ -19,7 +17,7 @@ export default async function ExtAuthV1(login: string):
     ).then(r => {
         return r.data
     }).catch(e => {
-        let localRes: AuthExtV1 = {
+        let localRes: AuthSignupCheckLogin = {
             error: true,
             message: null,
             status: e.status,
