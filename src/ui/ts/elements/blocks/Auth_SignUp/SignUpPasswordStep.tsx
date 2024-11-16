@@ -16,8 +16,7 @@ export default function SignUpPasswordStep({passwordRef, callBackPrevStep, callB
         }, 2500)
     }
 
-    return <div className="flex flex-col items-center justify-between space-y-4 p-6 sign-up-step-elem"
-                style={{width: 300}}>
+    return <div className="flex flex-col items-center justify-between space-y-4 p-6 sign-up-step-elem">
         <h2>
             Осталось чуть-чуть. Теперь придумай пароль.
         </h2>

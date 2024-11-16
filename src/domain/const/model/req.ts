@@ -10,9 +10,18 @@ export type AuthExtV1 = {
 
 export type AuthSignupCheckLogin = {
     payload: {
-        unused: boolean
+        unused: boolean,
+        x_TempAuth_Token: string
     }
     status: number
     error: boolean
     message: string
 }
+
+export type AuthSignupSendPhoneCode = {
+    payload: null
+    status: number
+    error: boolean
+    message: string
+}
+

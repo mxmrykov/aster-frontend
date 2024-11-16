@@ -1,28 +1,31 @@
 // @ts-ignore
-import {AuthSignupCheckLogin} from "../../../const/model/req.ts";
+import {AuthSignupSendPhoneCode} from "../../../const/model/req.ts";
+// @ts-ignore
+import * as consts from "../../../const/https/req.ts";
 // @ts-ignore
 import * as constants from "../../../const/https/req.ts";
 import axios from "axios";
 
-export default async function checkLogin(login: string): Promise<AuthSignupCheckLogin> {
-    return await constants.instanceAuthApi.post<AuthSignupCheckLogin>(
-        constants.API_GROUPS["AUTH_API_V1_CHECK_LOGIN"],
+export default async function GetPhoneCode(phone: string, token: string):
+    Promise<AuthSignupSendPhoneCode> {
+    return await consts.instanceOAuthApi.get<AuthSignupSendPhoneCode>(
+        constants.API_GROUPS["OAUTH_API_V1_GET_PHONE_CODE"]
+            .addQueryParam("p", phone.replace(/[^0-9]/gm, "")),
         {
-            login: login
-        }, {
             headers: {
-                "Content-Type": "application/json",
+                "X-TempAuth-Token": token,
+                "Content-type": "application/json"
             }
         }
     ).then(r => {
         return r.data
     }).catch(e => {
-        let localRes: AuthSignupCheckLogin = {
+        let localRes: AuthSignupSendPhoneCode = {
             error: true,
             message: null,
             status: e.status,
             payload: null
-        };
+        }
 
         if (axios.isAxiosError(e)) {
             if (e.code === "ERR_NETWORK") {

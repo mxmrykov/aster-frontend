@@ -6,17 +6,15 @@ import "../../../../css/elems/sign-up-block.css"
 import SignUpPhoneStep from "./SignUpPhoneStep.tsx"
 // @ts-ignore
 import SignUpPasswordStep from "./SignUpPasswordStep.tsx";
-// @ts-ignore
-import checkLogin from "../../../../../domain/https/auth/sighup/check-login.ts";
+import {useState} from "react";
 
 export default function SignUpForm(): React.JSX.Element {
     const passwordRef = React.useRef<HTMLInputElement | null>(null);
 
     const [name, setName] = React.useState<string>(null)
+    const [token, setToken] = useState<string>(null)
     const [login, setLogin] = React.useState<string>(null)
     const [phone, setPhone] = React.useState<string>(null)
-
-    const [extAuthPending, setExtAuthPending] = React.useState<boolean>(false)
 
     const scroll = (val: number) => document.getElementById("sign-up-step-p")?.scrollTo({
         left: val,
@@ -42,25 +40,14 @@ export default function SignUpForm(): React.JSX.Element {
                 login={login}
                 setName={setName}
                 setLogin={setLogin}
-                callBackNextStep={() => {
-                    if (extAuthPending)
-                    checkLogin(login).then(r => {
-                        if (r.status === 200) {
-                            scroll(268)
-                            return
-                        }
-
-                        switch (r.message) {
-                            case "Login is already in use":
-
-                        }
-                    })
-                }}
+                setToken={setToken}
+                callBackNextStep={() => scroll(268)}
             />
             <SignUpPhoneStep
                 name={name}
                 phone={phone}
                 setPhone={setPhone}
+                token={token}
                 callBackNextStep={() => scroll(268 * 2)}
                 callBackPrevStep={() => scroll(0)}
             />

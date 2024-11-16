@@ -1,10 +1,13 @@
 import * as React from "react";
 import IMask from 'imask';
+// @ts-ignore
+import GetPhoneCode from "../../../../../domain/https/auth/sighup/get-phone-code.ts";
 
 export default function SignUpPhoneStep({
                                             name,
                                             phone,
                                             setPhone,
+                                            token,
                                             callBackNextStep,
                                             callBackPrevStep
                                         }): React.JSX.Element {
@@ -25,7 +28,7 @@ export default function SignUpPhoneStep({
         mask: '+{7} (000) 000-00-00'
     };
 
-    return <div className="flex flex-col items-center space-y-6 p-6 sign-up-step-elem" style={{width: 300}}>
+    return <div className="flex flex-col items-center space-y-6 p-6 sign-up-step-elem">
         <h2 className="text-center">
             Отлично, <span className="text-blue-400">{name}</span>.<br/>Теперь введи свой номер телефона.
         </h2>
@@ -65,7 +68,11 @@ export default function SignUpPhoneStep({
                         return
                     }
 
-                    callBackNextStep()
+                    GetPhoneCode(phone, token).then(r => {
+                      if (r.status === 200) {
+                          callBackNextStep()
+                      }
+                    })
                 }}
             >
             Далее
