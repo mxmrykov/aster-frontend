@@ -6,11 +6,14 @@ import * as consts from "../../../const/https/req.ts";
 import * as constants from "../../../const/https/req.ts";
 import axios from "axios";
 
-export default async function GetPhoneCode(phone: string, token: string):
+export default async function SetPhoneCode(phone: string, code: number, token: string):
     Promise<AuthSignupSendPhoneCode> {
-    return await consts.instanceOAuthApi.get<AuthSignupSendPhoneCode>(
-        constants.API_GROUPS["OAUTH_API_V1_GET_PHONE_CODE"]
-            .addQueryParam("p", phone.replace(/[^0-9]/gm, "")),
+    return await consts.instanceOAuthApi.post<AuthSignupSendPhoneCode>(
+        constants.API_GROUPS["OAUTH_API_V1_GET_PHONE_CODE"],
+        {
+            phone: phone.replace(/[^0-9]/gm, ""),
+            code: Number(code)
+        },
         {
             headers: {
                 "X-TempAuth-Token": token,

@@ -1,4 +1,5 @@
-import * as React from "react";
+// @ts-ignore
+import React, {useEffect, useState} from "react";
 // @ts-ignore
 import SignUpFirstStep from "./SignUpFirstStep.tsx"
 import "../../../../css/elems/sign-up-block.css"
@@ -6,35 +7,42 @@ import "../../../../css/elems/sign-up-block.css"
 import SignUpPhoneStep from "./SignUpPhoneStep.tsx"
 // @ts-ignore
 import SignUpPasswordStep from "./SignUpPasswordStep.tsx";
-import {useState} from "react";
+// @ts-ignore
+import SignUpConfirmCodeStep from "./SignUpConfirmCodeStep.tsx";
 
 export default function SignUpForm(): React.JSX.Element {
-    const passwordRef = React.useRef<HTMLInputElement | null>(null);
 
     const [name, setName] = React.useState<string>(null)
     const [token, setToken] = useState<string>(null)
     const [login, setLogin] = React.useState<string>(null)
     const [phone, setPhone] = React.useState<string>(null)
+    const [code, setCode] = React.useState<string>(null)
+    const [password, setPassword] = React.useState<string>(null)
 
-    const scroll = (val: number) => document.getElementById("sign-up-step-p")?.scrollTo({
-        left: val,
-        behavior: 'smooth'
-    })
+    const scrollRef = React.useRef(null)
 
+    const scroll = (val: number) => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollBy({
+                left: val,
+                behavior: 'smooth'
+            })
+        }
+    }
+
+    useEffect(() => console.log("render"))
 
     const createAccount = () => {
 
     }
 
     return <article
-        className="flex flex-col items-center p-6 rounded-2xl bg-gray-900/70 backdrop-blur-md"
+        className="flex flex-col items-center rounded-2xl p-6 pb-0 bg-gray-900/70 backdrop-blur-md sign-up-step-parent"
     >
-        <div className="">
-            <h1 className="text-2xl">
-                Регистрация
-            </h1>
-        </div>
-        <article className="flex sign-up-step" id="sign-up-step-p">
+        <h1 className="text-2xl mb-5">
+            Регистрация
+        </h1>
+        <article className="flex sign-up-step pb-0" ref={scrollRef}>
             <SignUpFirstStep
                 name={name}
                 login={login}
@@ -48,12 +56,21 @@ export default function SignUpForm(): React.JSX.Element {
                 phone={phone}
                 setPhone={setPhone}
                 token={token}
-                callBackNextStep={() => scroll(268 * 2)}
-                callBackPrevStep={() => scroll(0)}
+                callBackPrevStep={() => scroll(-268)}
+                callBackNextStep={() => scroll(268)}
+            />
+            <SignUpConfirmCodeStep
+                phone={phone}
+                token={token}
+                code={code}
+                setCode={setCode}
+                callBackPrevStep={() => scroll(-268)}
+                callBackNextStep={() => scroll(268)}
             />
             <SignUpPasswordStep
-                passwordRef={passwordRef}
-                callBackPrevStep={() => scroll(268)}
+                password={password}
+                setPassword={setPassword}
+                callBackPrevStep={() => scroll(-268)}
                 callBackNextStep={() => createAccount()}
             />
         </article>

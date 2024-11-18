@@ -3,6 +3,8 @@ import * as React from "react";
 import ExtAuthV1 from "../../../../../domain/https/auth/entrance/ext-auth-v1.ts";
 // @ts-ignore
 import AuthFromAside from "./AuthFromAside.tsx";
+// @ts-ignore
+import {showUpSignUpError} from "../../../../../domain/app/utils/tsx.ts";
 
 export default function AuthForm(): React.JSX.Element {
     const loginRef = React.useRef<HTMLInputElement | null>(null);
@@ -10,17 +12,8 @@ export default function AuthForm(): React.JSX.Element {
 
     const [highLightLogin, setHighLightLogin] = React.useState<boolean>(false)
     const [highLightPassword, setHighLightPassword] = React.useState<boolean>(false)
-    const [error, setError] = React.useState<string>(null)
+    const [error, setError] = React.useState<React.JSX.Element>(null)
     const [extAuthPending, setExtAuthPending] = React.useState<boolean>(false)
-
-    const showUpLoginError = (e: string, changefunc: React.Dispatch<React.SetStateAction<boolean>>) => {
-        changefunc(true)
-        setError(e)
-        setTimeout(() => {
-            changefunc(false)
-            setError(null)
-        }, 2500)
-    }
 
     return <article
         className="flex p-6 rounded-2xl bg-gray-900/70 backdrop-blur-md"
@@ -47,14 +40,13 @@ export default function AuthForm(): React.JSX.Element {
                 onClick={() => {
                     if (extAuthPending) return
                     if (loginRef.current.value === null || loginRef.current.value === "") {
-                        showUpLoginError("Заполните пустое поле", setHighLightLogin)
+                        showUpSignUpError(<>Заполните пустое поле</>, setHighLightLogin, setError)
                     } else if (passwordRef.current.value === null || passwordRef.current.value === "") {
-                        showUpLoginError("Заполните пустое поле", setHighLightPassword)
+                        showUpSignUpError(<>Заполните пустое поле</>, setHighLightPassword, setError)
                     } else {
                         setExtAuthPending(true)
                         ExtAuthV1(loginRef.current.value).then(callback => {
                             setExtAuthPending(false)
-                            console.log(callback)
                         })
                     }
                 }}

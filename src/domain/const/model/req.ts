@@ -24,4 +24,3 @@ export type AuthSignupSendPhoneCode = {
     error: boolean
     message: string
 }
-
