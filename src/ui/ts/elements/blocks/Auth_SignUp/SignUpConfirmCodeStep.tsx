@@ -4,6 +4,15 @@ import React from "react";
 import SetPhoneCode from "../../../../../domain/https/auth/sighup/set-phone-code.ts";
 // @ts-ignore
 import {hideSignUpError, showUpSignUpError} from "../../../../../domain/app/utils/tsx.ts";
+// @ts-ignore
+import SignUpSliderElem from "../../element/SignUpSliderElem.tsx";
+// @ts-ignore
+import TextError from "../../element/TextError.tsx";
+// @ts-ignore
+import Button from "../../element/Button.tsx";
+import {CgSpinner} from "react-icons/cg";
+// @ts-ignore
+import InputCode from "../../element/InputCode.tsx";
 
 export default function SignUpConfirmCodeStep({
                                                   phone,
@@ -18,51 +27,44 @@ export default function SignUpConfirmCodeStep({
     const [error, setError] = React.useState<React.JSX.Element>(null)
     const [extAuthPending, setExtAuthPending] = React.useState<boolean>(false)
 
-    return <div className="flex flex-col items-center justify-between" style={{minWidth: 268}}>
+    return <SignUpSliderElem>
         <h2 className="text-center">
             Теперь подтвердим твой номер.<br/> Введи 6 цифр из смс.
         </h2>
-        <div>
-            <input
-                type="number"
-                id="signup-code-input"
-                placeholder="Код из смс"
-                maxLength={9}
-                className={!highLightCode ? "p-2 rounded-md border-2 border-gray-600 bg-gray-600 focus:border-blue-500" : "p-2 text-pink-700 rounded-md border-2 border-pink-700 bg-pink-300"}
-                onChange={e => {
-                    setCode(e.target.value.replace(/[^0-9]/, ""))
-                    if (code !== null || code !== "") {
-                        hideSignUpError(setHighLightCode, setError)
-                    }
-                }}
-                value={code ? code : ""}
-            />
-        </div>
-        <p className="text-center text-red-500 font-semibold">{error}</p>
+        <InputCode
+            ph="Код из смс"
+            highLightTrigger={highLightCode}
+            changer={e => {
+                setCode(e.target.value.replace(/[^0-9]/, ""))
+                if (code !== null || code !== "") {
+                    hideSignUpError(setHighLightCode, setError)
+                }
+            }}
+            val={code}
+        />
+        <TextError>{error}</TextError>
         <span
             className="flex w-full justify-around"
         >
-            <button
-                className="p-2 bg-violet-500 rounded-md"
-                onClick={() => {
+            <Button
+                type="d"
+                action={() => {
                     callBackPrevStep()
                 }}
             >
                 Назад
-            </button>
-            <button
-                className="p-2 bg-blue-500 rounded-md"
-                onClick={() => {
+            </Button>
+            <Button
+                action={() => {
                     if (code === null) {
                         showUpSignUpError(<>Заполните код подтверждения</>, setHighLightCode, setError)
                         return
                     }
 
-                    if (code?.length !== 6) {
+                    if (code.length !== 6) {
                         showUpSignUpError(<>Код должен состоять из 6 цифр</>, setHighLightCode, setError)
                         return
                     }
-
 
 
                     if (!extAuthPending) {
@@ -89,8 +91,13 @@ export default function SignUpConfirmCodeStep({
                     }
                 }}
             >
-            Далее
-            </button>
+            {
+                extAuthPending ? <CgSpinner
+                    className="animate-spin"
+                    size={26}
+                /> : "Далее"
+            }
+            </Button>
         </span>
-    </div>
+    </SignUpSliderElem>
 }
