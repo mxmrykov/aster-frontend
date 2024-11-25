@@ -9,7 +9,7 @@ export const API_GROUPS = {
     "AUTH_API_V1_INT": "/auth/api/v1/internal",
     "OAUTH_API_V1_AUTH_HANDSHAKE": "/oauth/api/v1/authentication/auth/handshake",
     "OAUTH_API_V1_SIGNUP_HANDSHAKE": "/oauth/api/v1/authentication/signup/handshake",
-    "OAUTH_API_V1_GET_PHONE_CODE": "/oauth/api/v1/authentication/signup/confirm/code"
+    "OAUTH_API_V1_GET_PHONE_CODE": "/oauth/api/v1/authentication/signup/confirm/code",
 }
 
 export const instanceAuthApi = axios.create({

@@ -1,5 +1,5 @@
 // @ts-ignore
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 // @ts-ignore
 import SignUpFirstStep from "./SignUpFirstStep.tsx"
 import "../../../../css/elems/sign-up-block.css"
@@ -9,6 +9,7 @@ import SignUpPhoneStep from "./SignUpPhoneStep.tsx"
 import SignUpPasswordStep from "./SignUpPasswordStep.tsx";
 // @ts-ignore
 import SignUpConfirmCodeStep from "./SignUpConfirmCodeStep.tsx";
+import {signupModelData} from "../../../../../domain/const/model/signup";
 
 export default function SignUpForm(): React.JSX.Element {
 
@@ -19,6 +20,8 @@ export default function SignUpForm(): React.JSX.Element {
     const [code, setCode] = React.useState<string>(null)
     const [password, setPassword] = React.useState<string>(null)
 
+    const [signUpData, setSignUpData] = React.useState<signupModelData>(null)
+
     const scrollRef = React.useRef(null)
 
     const scroll = (val: number) => {
@@ -28,12 +31,6 @@ export default function SignUpForm(): React.JSX.Element {
                 behavior: 'smooth'
             })
         }
-    }
-
-    useEffect(() => console.log("render"))
-
-    const createAccount = () => {
-
     }
 
     return <article
@@ -65,13 +62,24 @@ export default function SignUpForm(): React.JSX.Element {
                 code={code}
                 setCode={setCode}
                 callBackPrevStep={() => scroll(-268)}
-                callBackNextStep={() => scroll(268)}
+                callBackNextStep={() => {
+                    let _: signupModelData = {
+                        name: name,
+                        login: login,
+                        phone: phone.replace(/[^0-9]/gm, ""),
+                        password: password,
+                        token: token
+                    }
+
+                    setSignUpData(_)
+                    scroll(268)
+                }}
             />
             <SignUpPasswordStep
                 password={password}
+                signUpData={signUpData}
                 setPassword={setPassword}
                 callBackPrevStep={() => scroll(-268)}
-                callBackNextStep={() => createAccount()}
             />
         </article>
     </article>

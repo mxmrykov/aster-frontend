@@ -24,3 +24,13 @@ export type AuthSignupSendPhoneCode = {
     error: boolean
     message: string
 }
+
+export type AuthSignupProcess = {
+    payload: {
+        signature: string
+        access_token: string
+    }
+    status: number
+    error: boolean
+    message: string
+}

@@ -10,17 +10,58 @@ import Button from "../../element/Button.tsx";
 import TextError from "../../element/TextError.tsx";
 // @ts-ignore
 import HiddenInput from "../../element/HiddenInput.tsx";
+// @ts-ignore
+import signupHandshake from "../../../../../domain/https/auth/sighup/signup.ts";
 
 export default function SignUpPasswordStep({
                                                password,
+                                               signUpData,
                                                setPassword,
-                                               callBackPrevStep,
-                                               callBackNextStep
+                                               callBackPrevStep
                                            }): React.JSX.Element {
 
     const [highLightPassword, setHighLightPassword] = React.useState<boolean>(false)
     const [error, setError] = React.useState<React.JSX.Element>(null)
     const [showPassword, setShowPassword] = React.useState<boolean>(false)
+    const [signUpPending, setSignUpPending] = React.useState<boolean>(false)
+
+    const createAccount = () => {
+        if (!signUpPending) {
+            setSignUpPending(true)
+            signUpData.password = password
+            signupHandshake(signUpData).then(
+                r => {
+                    setSignUpPending(false)
+                    if (r.status === 200) {
+                        localStorage.setItem("auth_signature", r.payload.signature)
+                        localStorage.setItem("auth_at", r.payload.access_token)
+                        window.location.href = "/home"
+                        return
+                    }
+
+                    if (r?.message === undefined || r?.message === null) {
+                        setError(<>Произошла неизвестная ошибка</>)
+                        return
+                    }
+
+                    switch (r?.message) {
+                        case "Failed to sign up user":
+                            setError(<>Не удалось завершить регистрацию</>)
+                            return
+                        case "Failed to validate user signup":
+                            setError(<>Неверно указаны данные</>)
+                            return
+                        case "Invalid request":
+                            setError(<>Не указано какое-либо поле</>)
+                            return
+                        default:
+                            setError(<>Произошла неизвестная ошибка</>)
+                            return
+                    }
+                }
+            )
+        }
+    }
 
     return <SignUpSliderElem>
         <h2 className="text-center">
@@ -77,7 +118,7 @@ export default function SignUpPasswordStep({
                         return
                     }
 
-                    callBackNextStep()
+                    createAccount()
                 }}
             >
             Далее

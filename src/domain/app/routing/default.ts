@@ -1,5 +1,9 @@
-const aa_token = localStorage.getItem("aa_token")
+export const AuthPageRouting = (): boolean => {
+    if (localStorage.getItem("auth_at") === null || localStorage.getItem("auth_signature") === null) window.location.href = "/a"
+    return true
+}
 
-export const Routing = () => {
-    if (aa_token === null) window.location.href = "/a"
+export const NonAuthPageRouting = (): boolean => {
+    if (localStorage.getItem("auth_at") !== null && localStorage.getItem("auth_signature") !== null) window.location.href = "/home"
+    return true
 }

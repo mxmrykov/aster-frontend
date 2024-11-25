@@ -7,8 +7,11 @@ import FullScreenCenter from "../elements/FullScreenCenter.tsx";
 import AuthForm from "../elements/blocks/Auth_SignUp/AuthForm.tsx";
 
 import Helmet from "react-helmet"
+// @ts-ignore
+import {NonAuthPageRouting} from "../../../domain/app/routing/default.ts";
 
 export default function Auth(): React.JSX.Element {
+    NonAuthPageRouting()
     return <RootParent>
         <Helmet>
             <title>Aster - Вход</title>
