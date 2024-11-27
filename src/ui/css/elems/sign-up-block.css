@@ -1,0 +1,11 @@
+
+.sign-up-step {
+    width: 268px;
+    overflow-x: hidden;
+}
+
+.sign-up-step-parent {
+    width: 268px;
+    padding: 24px;
+    box-sizing: unset;
+}
