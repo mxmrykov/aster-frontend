@@ -36,8 +36,6 @@ export default async function SetPhoneCode(phone: string, code: number, token: s
             } else if (e.code === "ERR_CONNECTION_REFUSED") {
                 localRes.message = "Ошибка соединения с сервером"
             }
-        } else {
-            localRes.message = "Неизвестная сетевая ошибка"
         }
 
         return localRes

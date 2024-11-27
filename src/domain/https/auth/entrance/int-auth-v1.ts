@@ -23,8 +23,8 @@ export default async function IntAuthV1(
     }).catch(e => {
         let localRes: AuthIntV1 = {
             error: true,
-            message: null,
-            status: e.status,
+            message: e.response.data?.message,
+            status: e.response.data?.status,
             payload: null
         };
 
@@ -33,8 +33,6 @@ export default async function IntAuthV1(
                 localRes.message = "Ошибка получения данных с сервера"
             } else if (e.code === "ERR_CONNECTION_REFUSED") {
                 localRes.message = "Ошибка соединения с сервером"
-            } else {
-                localRes.message = e.message
             }
         } else {
             localRes.message = "Неизвестная сетевая ошибка"

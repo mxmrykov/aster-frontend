@@ -12,6 +12,7 @@ import TextError from "../../element/TextError.tsx";
 import HiddenInput from "../../element/HiddenInput.tsx";
 // @ts-ignore
 import signupHandshake from "../../../../../domain/https/auth/sighup/signup.ts";
+import {CgSpinner} from "react-icons/cg";
 
 export default function SignUpPasswordStep({
                                                password,
@@ -121,7 +122,12 @@ export default function SignUpPasswordStep({
                     createAccount()
                 }}
             >
-            Далее
+            {
+                signUpPending ? <CgSpinner
+                    className="animate-spin"
+                    size={26}
+                /> : "Далее"
+            }
             </Button>
         </span>
     </SignUpSliderElem>

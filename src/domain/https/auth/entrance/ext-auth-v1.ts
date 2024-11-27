@@ -12,8 +12,7 @@ export default async function ExtAuthV1(login: string):
             login: login
         }, {
             headers: {
-                "Content-Type": "application/json",
-                "Keep-Alive": "timeout=15, max=5"
+                "Content-Type": "application/json"
             }
         }
     ).then(r => {
@@ -21,8 +20,8 @@ export default async function ExtAuthV1(login: string):
     }).catch(e => {
         let localRes: AuthExtV1 = {
             error: true,
-            message: null,
-            status: e.status,
+            message: e.response.data?.message,
+            status: e.response.data?.status,
             payload: null
         };
 
@@ -31,8 +30,6 @@ export default async function ExtAuthV1(login: string):
                 localRes.message = "Ошибка получения данных с сервера"
             } else if (e.code === "ERR_CONNECTION_REFUSED") {
                 localRes.message = "Ошибка соединения с сервером"
-            } else {
-                localRes.message = e.message
             }
         } else {
             localRes.message = "Неизвестная сетевая ошибка"

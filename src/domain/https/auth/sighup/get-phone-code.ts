@@ -33,8 +33,6 @@ export default async function GetPhoneCode(phone: string, token: string):
             } else if (e.code === "ERR_CONNECTION_REFUSED") {
                 localRes.message = "Ошибка соединения с сервером"
             }
-        } else {
-            localRes.message = "Неизвестная сетевая ошибка"
         }
 
         return localRes
