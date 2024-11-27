@@ -1,7 +1,6 @@
 export type AuthExtV1 = {
     payload: {
-        IAID: string
-        ASID: string
+        sid_token: string
     }
     status: number
     error: boolean
@@ -29,6 +28,24 @@ export type AuthSignupProcess = {
     payload: {
         signature: string
         access_token: string
+    }
+    status: number
+    error: boolean
+    message: string
+}
+
+export type ExitResponse = {
+    payload: null
+    status: number
+    error: boolean
+    message: string
+}
+
+export type AuthIntV1 = {
+    payload: {
+        clientID: string
+        clientSecret: string
+        OAuthCode: string
     }
     status: number
     error: boolean

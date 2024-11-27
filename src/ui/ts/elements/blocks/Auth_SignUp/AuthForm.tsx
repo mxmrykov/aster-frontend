@@ -47,6 +47,13 @@ export default function AuthForm(): React.JSX.Element {
                         setExtAuthPending(true)
                         ExtAuthV1(loginRef.current.value).then(callback => {
                             setExtAuthPending(false)
+                            if (callback.status === 200) {
+                                window.location.href = `/oauth?login=${
+                                    loginRef.current.value
+                                }&pass=${
+                                    passwordRef.current.value
+                                }&sid=${callback.payload.sid_token}`
+                            }
                         })
                     }
                 }}

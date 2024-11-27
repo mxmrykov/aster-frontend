@@ -12,7 +12,9 @@ export default function Home(): React.JSX.Element {
         <>Home</>
         <Button
         action={() => {
-            
+            localStorage.removeItem("auth_at")
+            localStorage.removeItem("auth_signature")
+            window.location.href = ""
         }}>
             Выйти
         </Button>

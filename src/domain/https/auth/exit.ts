@@ -1,38 +1,35 @@
 // @ts-ignore
-import {AuthExtV1} from "../../../const/model/req.ts";
+import {AuthSignupSendPhoneCode, ExitResponse} from "../../const/model/req.ts";
 // @ts-ignore
-import {instanceAuthApi, API_GROUPS} from "../../../const/https/req.ts";
+import * as constants from "../../const/https/req.ts"
 import axios from "axios";
 
-export default async function ExtAuthV1(login: string):
-    Promise<AuthExtV1> {
-    return await instanceAuthApi.post<AuthExtV1>(
-        API_GROUPS["AUTH_API_V1_EXT"],
+
+export default async function exitSession({access, signature}):
+    Promise<ExitResponse> {
+    return await constants.instanceOAuthApi.get<ExitResponse>(
+        constants.API_GROUPS["OAUTH_API_V1_EXIT_SESSION"],
         {
-            login: login
-        }, {
             headers: {
-                "Content-Type": "application/json",
-                "Keep-Alive": "timeout=15, max=5"
+                "X-Signature": signature,
+                "X-Access-Token": access
             }
         }
     ).then(r => {
         return r.data
     }).catch(e => {
-        let localRes: AuthExtV1 = {
+        let localRes: AuthSignupSendPhoneCode = {
             error: true,
-            message: null,
-            status: e.status,
+            message: e.response.data?.message,
+            status: e.response.data?.status,
             payload: null
-        };
+        }
 
         if (axios.isAxiosError(e)) {
             if (e.code === "ERR_NETWORK") {
                 localRes.message = "Ошибка получения данных с сервера"
             } else if (e.code === "ERR_CONNECTION_REFUSED") {
                 localRes.message = "Ошибка соединения с сервером"
-            } else {
-                localRes.message = e.message
             }
         } else {
             localRes.message = "Неизвестная сетевая ошибка"
