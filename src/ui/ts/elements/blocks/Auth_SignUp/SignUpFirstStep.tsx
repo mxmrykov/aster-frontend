@@ -8,7 +8,7 @@ import {CgSpinner} from "react-icons/cg";
 // @ts-ignore
 import Button from "../../element/Button.tsx";
 // @ts-ignore
-import SignUpSliderElem from "../../element/SignUpSliderElem.tsx";
+import SignUpSliderElem from "../../element/Signup/SignUpSliderElem.tsx";
 // @ts-ignore
 import InputText from "../../element/InputText.tsx";
 // @ts-ignore
@@ -24,6 +24,7 @@ export default function SignUpFirstStep({
                                         }): React.JSX.Element {
     const [highLightName, setHighLightName] = React.useState<boolean>(false)
     const [highLightLogin, setHighLightLogin] = React.useState<boolean>(false)
+    // @ts-ignore
     const [error, setError] = React.useState<React.JSX.Element>(null)
 
     const [extAuthPending, setExtAuthPending] = React.useState<boolean>(false)
@@ -107,6 +108,7 @@ export default function SignUpFirstStep({
                                 showUpSignUpError(<>Логин занят</>, setHighLightLogin, setError)
                                 break
                             default:
+                                // @ts-ignore
                                 showUpSignUpError(<>Произошла ошибка</>, undefined, setError)
                                 break
                         }

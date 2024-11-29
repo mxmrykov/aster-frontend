@@ -5,7 +5,7 @@ import SetPhoneCode from "../../../../../domain/https/auth/sighup/set-phone-code
 // @ts-ignore
 import {hideSignUpError, showUpSignUpError} from "../../../../../domain/app/utils/tsx.ts";
 // @ts-ignore
-import SignUpSliderElem from "../../element/SignUpSliderElem.tsx";
+import SignUpSliderElem from "../../element/Signup/SignUpSliderElem.tsx";
 // @ts-ignore
 import TextError from "../../element/TextError.tsx";
 // @ts-ignore

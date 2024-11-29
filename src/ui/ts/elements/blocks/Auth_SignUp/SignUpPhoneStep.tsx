@@ -12,7 +12,7 @@ import InputText from "../../element/InputText.tsx";
 // @ts-ignore
 import TextError from "../../element/TextError.tsx";
 // @ts-ignore
-import SignUpSliderElem from "../../element/SignUpSliderElem.tsx";
+import SignUpSliderElem from "../../element/Signup/SignUpSliderElem.tsx";
 
 export default function SignUpPhoneStep({
                                             name,

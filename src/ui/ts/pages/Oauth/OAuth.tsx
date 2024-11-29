@@ -1,5 +1,5 @@
 // @ts-ignore
-import OauthLoading from "../../elements/element/OauthLoading.tsx";
+import OauthLoading from "../../elements/element/oauth/OauthLoading.tsx";
 import * as React from "react";
 import {useSearchParams} from "react-router-dom";
 import {useEffect} from "react";
@@ -12,6 +12,7 @@ export default function OAuth(): React.JSX.Element {
 
     useEffect(() => {
         OAuthClient(
+            // @ts-ignore
             searchParams.get("clientID"),
             searchParams.get("clientSecret"),
             searchParams.get("oauthCode"),

@@ -6,13 +6,13 @@ import { AuthPageRouting } from "../../../domain/app/routing/default.ts";
 // @ts-ignore
 import Main from "../elements/element/Main.tsx";
 
-export default function Home(): React.JSX.Element {
+export default function Rizzes(): React.JSX.Element {
     AuthPageRouting()
     return <RootParent>
         <Main>
             <section>
                 <h1 className="text-2xl">
-                    Home
+                    Rizzes
                 </h1>
             </section>
         </Main>

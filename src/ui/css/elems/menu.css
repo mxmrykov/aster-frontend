@@ -1,0 +1,5 @@
+.content__parent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

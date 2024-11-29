@@ -1,14 +1,15 @@
 // @ts-ignore
-import {AuthSignupSendPhoneCode, ExitResponse} from "../../const/model/req.ts";
+import { AuthSignupSendPhoneCode, ExitResponse } from "../../const/model/req.ts";
 // @ts-ignore
 import * as constants from "../../const/https/req.ts"
 import axios from "axios";
 
 
-export default async function exitSession({access, signature}):
+export default async function exitSession(access: string, signature: string):
     Promise<ExitResponse> {
-    return await constants.instanceOAuthApi.get<ExitResponse>(
+    return await constants.instanceOAuthApi.post<ExitResponse>(
         constants.API_GROUPS["OAUTH_API_V1_EXIT_SESSION"],
+        {},
         {
             headers: {
                 "X-Signature": signature,

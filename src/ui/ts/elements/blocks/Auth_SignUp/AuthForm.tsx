@@ -25,11 +25,14 @@ export default function AuthForm(): React.JSX.Element {
     const [highLightLogin, setHighLightLogin] = React.useState<boolean>(false)
     const [highLightPassword, setHighLightPassword] = React.useState<boolean>(false)
 
+    // @ts-ignore
     const [error, setError] = React.useState<React.JSX.Element>(null)
     const [extAuthPending, setExtAuthPending] = React.useState<boolean>(false)
     const [showPassword, setShowPassword] = React.useState<boolean>(false)
 
+    // @ts-ignore
     const [login, setLogin] = React.useState<string>(null)
+    // @ts-ignore
     const [password, setPassword] = React.useState<string>(null)
 
     const intAuth = function (sid_token: string): void {

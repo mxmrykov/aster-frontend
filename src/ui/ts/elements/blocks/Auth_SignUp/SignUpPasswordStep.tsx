@@ -3,7 +3,7 @@ import {BsEye, BsEyeSlash} from "react-icons/bs";
 // @ts-ignore
 import {hideSignUpError, showUpSignUpError} from "../../../../../domain/app/utils/tsx.ts";
 // @ts-ignore
-import SignUpSliderElem from "../../element/SignUpSliderElem.tsx";
+import SignUpSliderElem from "../../element/Signup/SignUpSliderElem.tsx";
 // @ts-ignore
 import Button from "../../element/Button.tsx";
 // @ts-ignore
